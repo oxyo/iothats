@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+		<head>
+			<style>
+			
+			body {
+				background-color: #10BBCC;
+			}
+			h1 {
+				color: blue;
+			}
+			p {
+				color: red;
+			}
+			
+			</style>
+	
+	
+		</head>
+		<body>
+			<div id="sw"> Raspberry Pi Control</div>
+			<br>
+			<input id="userText" name="userText" type="text" value="">
+
+			<br><br>
+			<button id="btn" type="button" onclick="sayWord()">Speak</button>
+
+			<br><br>
+			<button id="btn" type="button" onclick="turnOn(1)">Turn On LED1</button>
+
+			<br><br>
+			<button id="btn2" type="button" onclick="turnOff(1)">Turn Off LED1</button>
+
+		
+<script>
+				
+function turnOn(id){
+	//window.location.replace('/on'+id);
+	var url = '/on'+id;
+	var body = 'id=0';
+	sendData(url, body);
+}
+
+function turnOff(id){
+	//window.location.replace('/off'+id);
+	var url = '/off'+id;
+	var body = 'id=0';
+	sendData(url, body);
+}
+
+function say(word){
+	var url = '/say/'+word;
+	//window.location.replace();
+	var body = 'id=0';
+	sendData(url, body);
+}
+
+function sayWord(){
+	var word = document.getElementById("userText").value;
+	say(word);
+}
+
+function sendData(url, body){
+	
+	fetch(url, {
+
+		method: 'post',
+		headers: {
+			'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+			'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+		},
+		body: body
+	}).then(function(response) {
+
+		if (response.status !== 200) {
+			alert('No response from server. Status Code:' + response.status);
+			return;
+		}
+
+		response.json().then(function(data) {
+			console.log('Response from server...');
+			console.log(JSON.stringify(data));
+			
+		});
+
+	}).catch(function(err) {
+		alert('Communication Error: ' + JSON.stringify(err));
+	});
+
+}
+
+
+
+
+function hello(){
+	var userName = document.getElementById("userName").value;
+	var labas = "Labas "+userName; 
+	var header = document.getElementById("sw");
+	header.innerHTML = labas;
+}
+			</script>
+		</body>
+</html>

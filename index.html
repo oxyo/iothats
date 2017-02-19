@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+		<head>
+			<style>
+			
+			body {
+				background-color: #10BBCC;
+			}
+			h1 {
+				color: blue;
+			}
+			p {
+				color: red;
+			}
+			
+			
+			</style>
+	
+	
+		</head>
+		<body>
+			<div id="sw"> Sveiki apsilanke Vaido puslapyje</div>
+			<br>
+			<input id="userName" name="userName" type="text" value="">
+			<br><br>
+			
+			<button id="btn" type="button" onclick="hello()">Click Me!</button>
+			
+			<br><br>
+			<button id="turnOn" type="button" onclick="turnOn()">Turn ON</button>
+			
+		
+			<script>
+				
+				
+				function turnOn(){
+					
+						window.location.replace('/on');
+					
+					}
+				
+				
+				function hello(){
+					var userName = document.getElementById("userName").value;
+					var labas = "Labas "+userName; 
+					var header = document.getElementById("sw");
+					header.innerHTML = labas;
+					}
+			</script>
+		</body>
+</html>
