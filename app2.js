@@ -43,6 +43,58 @@ app.post('/off1', function(req, res) {
 });
 
 
+app.get('/on1', function(req, res) {
+	
+	gpio.output(pin1, 1).then(function() {
+		console.log(state+'ON');
+		res.end(state+'ON'); 
+	});
+});
+
+
+app.get('/off1', function(req, res) {
+
+	gpio.output(pin1, 0).then(function() {
+		console.log(state+'OFF');
+		res.end(state+'OFF'); 
+	});
+	
+});
+
+
+
+app.post('/turn/:pos', function(req, res) {
+	
+	var pos = req.params.pos;
+
+	if(pos >= 0 && pos <=180){
+	
+	 console.log("Servo position set: "+ pos);
+		
+	} else{
+		
+	 console.log("ERROR: Incorrect servo position");
+	
+	}
+
+
+
+});
+
+
+app.get('/off1', function(req, res) {
+
+	gpio.output(pin1, 0).then(function() {
+		console.log(state+'OFF');
+		res.end(state+'OFF'); 
+	});
+	
+});
+
+
+
+
+
 app.post('/say/:word', function(req, res) {
 
 	var word = req.params.word;

@@ -23,13 +23,17 @@
 			<input id="userText" name="userText" type="text" value="">
 
 			<br><br>
-			<button id="btn" type="button" onclick="sayWord()">Speak</button>
+			<button id="btnSpeak" type="button" onclick="sayWord()">Speak</button>
 
 			<br><br>
 			<button id="btn" type="button" onclick="turnOn(1)">Turn On LED1</button>
 
 			<br><br>
 			<button id="btn2" type="button" onclick="turnOff(1)">Turn Off LED1</button>
+
+			<br><br>
+			<button id="btnServo" type="button" onclick="setServoPosition()">Turn Servo</button>
+
 
 		
 <script>
@@ -58,6 +62,18 @@ function say(word){
 function sayWord(){
 	var word = document.getElementById("userText").value;
 	say(word);
+}
+
+
+function setServoPosition(){
+	var pos = document.getElementById("userText").value;
+	setPosition(pos);
+}
+
+function setPosition(pos){
+	var url = '/turn/'+pos;
+	var body = 'id=0';
+	sendData(url, body);
 }
 
 function sendData(url, body){
