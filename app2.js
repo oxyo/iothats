@@ -16,6 +16,46 @@ var pin2 = 19;
 var state = 'LED on PIN'+pin1+'='; 
 
 var say = require('say');
+var serialport = require("serialport"); 
+var SerialPort = serialport.SerialPort; 
+
+// Serial port setup 
+var mPort = '/dev/ttyUSB0'; 
+	arduinoPort = new SerialPort(mPort, { 
+	baudRate: 9600, 
+	databits: 8, 
+	parity: 'none', //even 
+	stopbits: 1, 
+	flowControl: false	
+}, false); 
+
+
+
+// 
+// Send command to Arduino 
+// 
+function requestData(servoCommand) { 
+	arduinoPort.open(function (error) { 
+	if (error) { 
+		if(error == "Error: Port is already open") {	
+			arduinoPort.close(); 
+			console.log("Closing port..."); 
+		} 
+	} else { 
+		console.log('Connected to Arduino on port: ' + mPort); 
+		arduinoPort.write(servoCommand, function (err) { 
+			if (err) { 
+				console.log('Arduino Connection Error: ' + err); 
+			} else { 
+				console.log("Arduino command send: " + servoCommand); 
+
+				//request(command).toString('hex')); 
+			} 
+		}); 
+	} 
+}); 
+} 
+
 
 
 app.get('/', function(req, res) {
@@ -70,7 +110,9 @@ app.post('/turn/:pos', function(req, res) {
 	if(pos >= 0 && pos <=180){
 	
 	 console.log("Servo position set: "+ pos);
-		
+	 	 
+	 requestData(pos);
+	 		
 	} else{
 		
 	 console.log("ERROR: Incorrect servo position");
